@@ -4,12 +4,14 @@ import { configureStore } from '@reduxjs/toolkit';
 //import { combineReducers } from 'redux'
 import balanceReducer from './balanceSlice';
 import chooseThemeReducer from './chooseThemeSlice';
+import loginedReducer from './loginedSlice';
 
 //без сохранения
 export const store = configureStore({
     reducer: {
         balance: balanceReducer,
         theme: chooseThemeReducer,
+        logined: loginedReducer,
     },
   });
   /* redux-persist что бв сохранять наш стор в файлах, даже после закрытия приложения

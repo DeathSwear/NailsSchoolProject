@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {Text, StyleSheet} from "react-native"
 
 //import { NavigationContainer, useNavigation } from '@react-navigation/native';
@@ -13,9 +13,15 @@ const screen1Name = 'Sc1';
 const screen2Name = 'Sc2';
 const screen3Name = 'Sc3';
 
+import { useSelector } from 'react-redux';
+
+import Login from "../Screens/Login";
+
 export const Navigator = () => {
 
-    const Tab = createBottomTabNavigator();
+  const logined = useSelector((state) => state.logined.value);
+
+  const Tab = createBottomTabNavigator();
 
   return (
     <Tab.Navigator
@@ -56,7 +62,7 @@ export const Navigator = () => {
   >
         <Tab.Screen name={screen1Name} component={Screen1}/>
         <Tab.Screen name={screen2Name} component={Screen2}/>
-        <Tab.Screen name={screen3Name} component={Screen3}/>
+        {logined ? <Tab.Screen name={screen3Name} component={Screen3}/> : <Tab.Screen name={screen3Name} component={Login}/> }
     </Tab.Navigator>
   );
 /*
