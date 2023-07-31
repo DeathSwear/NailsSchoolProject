@@ -25,17 +25,15 @@ export const Screen2 = () => {
         
         <View style={styles.wrapper}>
             <Header/>
-            <View style={{flex:1}}>
                 <FlatList data={listOfItems} renderItem={({item}) => (
                     <PostItem el={item}/>
                 )}/>
-            </View>
         </View>
     );
 }
 const styles = StyleSheet.create({
     wrapper: {
-        backgroundColor: '#ffc4c8',
-        height: '100%'
-      }
+        backgroundColor: '#fafafa',
+        flex: 1,
+    },
 });

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, FlatList, Pressable} from 'react-native';
+import { StyleSheet, Text, View, FlatList} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ListItem from '../components/ListItem';
 import Header from '../components/Header';
@@ -36,7 +36,7 @@ export const Screen1 = () => {
     return(
         
         <View style={styles.wrapper}>
-            <Pressable onPress={handleJumpToScreen2}><Header/></Pressable>
+            <Header/>
             <View style={{flex:1}}>
                 <FlatList data={listOfItems} renderItem={({item}) => (
                     <ListItem el={item} jumpToScreen2={handleJumpToScreen2}/>
@@ -51,7 +51,7 @@ export const Screen1 = () => {
 const styles = StyleSheet.create({
     wrapper: {
         backgroundColor: '#fafafa',
-        height: '100%'
+        flex: 1
       }
 
 });

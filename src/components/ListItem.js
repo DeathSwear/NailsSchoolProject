@@ -38,10 +38,12 @@ const styles = StyleSheet.create({
         borderTopWidth: 0.3,
         marginTop: 4,
         marginBottom: 4,
-        width: '97%',
+        marginLeft: 7,
+        marginRight: 7,
         borderColor: '#c7c7c7',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderTopLeftRadius: 15
         
       },
       content__img: {
@@ -55,6 +57,7 @@ const styles = StyleSheet.create({
         color: '#000',
         fontSize: 17,
         flex: 1,
-        marginLeft: 15
+        marginLeft: 15,
+        
       }
 });

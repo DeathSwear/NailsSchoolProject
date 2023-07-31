@@ -2,36 +2,46 @@ import React, { useState } from "react";
 import {Text, StyleSheet} from "react-native"
 
 //import { NavigationContainer, useNavigation } from '@react-navigation/native';
-//import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+//первые два экрана-раздела
 import { Screen1 } from '../Screens/Screen1';
 import { Screen2 } from '../Screens/Screen2';
-import { Screen3 } from "../Screens/Screen3";
+//для удобства в настройке 3х нижних кнопок
 const screen1Name = 'Sc1';
 const screen2Name = 'Sc2';
 const screen3Name = 'Sc3';
+//три экрана, для третьего раздела
+import Login from "../Screens/Screen3/Login";
+import { Screen3 } from "../Screens/Screen3/Screen3";
+import  Personality  from "../Screens/Screen3/Personality"
 
-import { useSelector } from 'react-redux';
+import { useSelector} from 'react-redux';
 
-import Login from "../Screens/Login";
 
 export const Navigator = () => {
 
   const logined = useSelector((state) => state.logined.value);
+  //3й таб скрин
+  const FavoriteStack = createNativeStackNavigator();
+  function FavoriteStackScreen() {
+    return (
+      <FavoriteStack.Navigator screenOptions={{headerShown: false}}>
+        <FavoriteStack.Screen name="2" component={Screen3} />
+        <FavoriteStack.Screen name="3" component={Personality} />
+      </FavoriteStack.Navigator>
+    );
+  }
 
   const Tab = createBottomTabNavigator();
-
+  
   return (
+
     <Tab.Navigator
-    /*tabBarOptions={{
-      style: styles.labelStyle,
-    }}*/
     screenOptions={({ route }) => ({
       headerShown:false,
-      //tabBarShowLabel: false,
-      tabBarActiveTintColor: 'tomato',
+      tabBarActiveTintColor: '#a16493',
       tabBarInactiveTintColor: 'gray',
       tabBarItemStyle: styles.tabBarItemStyle,
       tabBarStyle: styles.tabBarStyle,
@@ -43,7 +53,6 @@ export const Navigator = () => {
         } else if (route.name === screen3Name){
           return <Text style={[{color: color}, styles.labelTextStyle]}>Избранное</Text>;
         }
-        //labelStyle = styles.labelStyle;
       },
       style: styles.screenOptionsStyle,
       tabBarIcon: ({ focused, color, size}) => {
@@ -58,41 +67,28 @@ export const Navigator = () => {
         return <Ionicons name={iconName} size={24} color={color}/>
       },
     })}
-
   >
-        <Tab.Screen name={screen1Name} component={Screen1}/>
-        <Tab.Screen name={screen2Name} component={Screen2}/>
-        {logined ? <Tab.Screen name={screen3Name} component={Screen3}/> : <Tab.Screen name={screen3Name} component={Login}/> }
+      <Tab.Screen name={screen1Name} component={Screen1}/>
+      <Tab.Screen name={screen2Name} component={Screen2}/>
+      <Tab.Screen name={screen3Name} component={logined ? FavoriteStackScreen : Login}/>
     </Tab.Navigator>
   );
-/*
-    const Stack = createNativeStackNavigator();
-    return(
-
-        
-        <Stack.Navigator screenOptions={{headerShown:false}}>
-            <Stack.Screen name="Screen1" component={Screen1}/>
-            <Stack.Screen name="Screen2" component={Screen2}/>
-            <Stack.Screen name="Screen3" component={Screen3}/>
-        </Stack.Navigator>
-        
-
-    );*/
 
 };
 const styles = StyleSheet.create({
   labelTextStyle: {
-      fontSize: 12,
+      fontSize: 13,
+      fontFamily: 'custom-font2',
     },
   tabBarItemStyle:{
     display: "flex",
-    
   },
   tabBarStyle:{
     height: 45,
     paddingTop: 4,
     paddingBottom: 1,
     display: "flex",
+    backgroundColor: '#f5f5f5'
   },
   screenOptionsStyle:{
     display: "flex",

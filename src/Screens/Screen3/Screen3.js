@@ -1,16 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Pressable } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { deposit, withdraw } from '../store/balanceSlice';
-import { change } from '../store/chooseThemeSlice';
+import { deposit, withdraw } from '../../store/balanceSlice';
+import { change } from '../../store/chooseThemeSlice';
 
-export const Screen3=()=>{
+export const Screen3=( {navigation} )=>{
 
     const balance = useSelector((state) => state.balance.value);
     const dispatch = useDispatch();
-
     const theme = useSelector((state) => state.theme.value);
 
     /* где угодно такое сделать, и смогу посмотреть баланс. так же как тут и изменить.
@@ -23,7 +22,9 @@ export const Screen3=()=>{
             <View style={styles.content}>
                 <Text numberOfLines={1} style={styles.content__text}>Избранное</Text>
                 <View style={styles.content__icoWrapper}>
-                    <Ionicons style={styles.icoWrapper_ico} name={'add-outline'} size={25} color={'#fff'} />
+                    <Pressable><Ionicons style={styles.icoWrapper_ico} name={'add-outline'} size={25} color={'#fff'} /></Pressable>
+                    <Pressable onPress={() => navigation.navigate('3')}><Ionicons style={styles.icoWrapper_ico} name={'person-circle-outline'} size={25} color={'#fff'} /></Pressable>
+
                 </View>
             </View>
             <View style={styles.container}>

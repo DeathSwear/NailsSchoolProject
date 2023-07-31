@@ -1,19 +1,38 @@
-import * as React from 'react';
-//import { View, Text, Button } from 'react-native';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { Navigator } from './src/navigation/Navigator';
-import {Provider} from "react-redux";
+import { Provider } from 'react-redux';
 import { store } from './src/store/store';
-
+import * as Font from 'expo-font';
 
 export default function App() {
-    return (
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        'custom-font1': require('./src/fonts/LaborUnion.ttf'),
+        'custom-font2': require('./src/fonts/Noah.ttf'),
+      });
+      setFontsLoaded(true);
+    }
+
+    loadFonts(); // Забыли вызвать функцию loadFonts
+
+    // Здесь нет возвращаемого значения
+  }, []);
+
+  // Ожидаем загрузку шрифтов
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  return (
     <Provider store={store}>
-        <NavigationContainer>
-          <Navigator/>
-        </NavigationContainer>
+      <NavigationContainer>
+        <Navigator />
+      </NavigationContainer>
     </Provider>
-    
   );
 }
 

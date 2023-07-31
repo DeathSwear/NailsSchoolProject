@@ -46,18 +46,18 @@ export default function PostItem({el}){
         <Pressable onPress={onPressChevron}><Ionicons style={styles.iconsWrapper_ico} name={chevronStyle} size={25} color={'#8c8c8c'} /></Pressable>
         <Pressable><Ionicons style={styles.iconsWrapper_ico} name={'git-merge-outline'} size={25} color={'#8c8c8c'} /></Pressable>
       </View>
-      {showText?(<Text style={styles.content__text}>{el.text}</Text>):null}
-
-      
+      {showText?(<Text style={styles.content__text}>{el.text}</Text>):null}    
     </View>
   );
 }
 const styles = StyleSheet.create({
     content: {
-     width:'100%',
+     flex: 1,
      backgroundColor: '#F5F5F5',
      borderBottomColor: '#e5e5e5',
      borderBottomWidth: 5,
+     width: '100%',
+     alignSelf: 'center',
 
     // marginBottom: 5
     },
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         color: '#000',
         flex: 1,
-        width: '90%',
+        //width: '90%',
         marginBottom: 10,
     },
     content__iconsWrapper: {
