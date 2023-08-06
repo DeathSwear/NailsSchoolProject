@@ -12,7 +12,8 @@ export default function ListItem({el, jumpToScreen2 }){
     const theme = useSelector((state) => state.theme.value);
 
     const ChooceThemeAndJumpToScreen2 = () => {
-      dispatch(change(el.text));
+      const newThemesArray = el.themes;
+      dispatch(change(newThemesArray));
       jumpToScreen2();
     };
 
@@ -43,14 +44,14 @@ const styles = StyleSheet.create({
         borderColor: '#c7c7c7',
         flexDirection: 'row',
         alignItems: 'center',
-        borderTopLeftRadius: 15
+        
         
       },
       content__img: {
         height: 75,
         width: 75,
-        borderColor: '#ffd1fd',
-        borderWidth: 2,
+        borderColor: '#ba84ae',
+        borderWidth: 1.5,
         borderRadius: 50
       },
       content__text: {

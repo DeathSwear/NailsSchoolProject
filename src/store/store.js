@@ -9,7 +9,6 @@ import loginedReducer from './loginedSlice';
 //без сохранения
 export const store = configureStore({
     reducer: {
-        balance: balanceReducer,
         theme: chooseThemeReducer,
         logined: loginedReducer,
     },

@@ -14,8 +14,9 @@ const Login = ({ navigation }) => {
     const [email, setEmail]= useState('');
     const [password, setPassword]= useState('');
     const [loading, setLoading]= useState(false);
-    const auth = FIREBASE_AUTH;
     const [stage, setStage] = useState('Choose')
+
+    const auth = FIREBASE_AUTH;
 
     //для появления/исчезновения полей для входа/регистрации
     const signInSetStage = () => {

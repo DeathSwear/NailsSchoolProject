@@ -84,11 +84,13 @@ const styles = StyleSheet.create({
     display: "flex",
   },
   tabBarStyle:{
-    height: 45,
+    height: 46,
     paddingTop: 4,
     paddingBottom: 1,
     display: "flex",
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#f5f5f5',
+    borderTopWidth: 1,
+    borderTopColor: '#c9c9c9'
   },
   screenOptionsStyle:{
     display: "flex",
