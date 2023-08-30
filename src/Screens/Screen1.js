@@ -1,26 +1,38 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View, FlatList} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, Text, View, FlatList, ActivityIndicator} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ListItem from '../components/ListItem';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-
+import { FIREBASE_STORE } from '../DB/firebaseConfig';
+import { collection, getDocs } from "firebase/firestore";
+import { useIsFocused } from '@react-navigation/native'; // Импорт хука
 export const Screen1 = () => {
+    const isFocused = useIsFocused();
+    const db = FIREBASE_STORE;
+    const [listTopic, setListTopic] = useState([]);
 
-    const [listOfItems, setListOfItems] = useState([
-        {text: 'Text1-1', themes: ['t1', 't11'], index:1, image:require('../images/nailTest.jpg') },
-        {text: 'Text2-1', themes: ['t1', 't11'], index:2, image:require('../images/nailTest.jpg') },
-        {text: 'Text3-2', themes: ['t2', 't22'], index:3, image:require('../images/nailTest.jpg') },
-        {text: 'Text4-2', themes: ['t2', 't22'], index:4, image:require('../images/nailTest.jpg') },
-        {text: 'Text5-3', themes: ['t3', 't33'], index:5, image:require('../images/nailTest.jpg') },
-        {text: 'Text6-3', themes: ['t3', 't33'], index:6, image:require('../images/nailTest.jpg') }
-      ])
+    const [loading, setLoading] = useState(false);
 
-      const navigation = useNavigation();
+    const getTopic = async () => {
+        
+        const querySnapshot = await getDocs(collection(db, "topic"));
+        const topic = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setListTopic(topic);
+        setLoading(false);
+    }
+    useEffect(() => {    
+        if(!listTopic.length)
+        {
+            setLoading(true);
+            getTopic();
+        }
+    }, [isFocused]);
 
-      const handleJumpToScreen2 = () => {
+    const navigation = useNavigation();
+    const handleJumpToScreen2 = () => {
         navigation.jumpTo('Sc2');
-      };
+    };
+
 
     return(
         
@@ -28,8 +40,9 @@ export const Screen1 = () => {
             <View style={styles.headerContent}>
                 <Text numberOfLines={1} style={styles.headerContent__text}>✨Luna - выбор маникюра</Text>
             </View>
+            {loading? <ActivityIndicator style={styles.activity} size="large" color="#dddddd"/> : null}
             <View style={{flex:1}}>
-                <FlatList data={listOfItems} renderItem={({item}) => (
+                <FlatList data={listTopic} renderItem={({item}) => (
                     <ListItem el={item} jumpToScreen2={handleJumpToScreen2}/>
                 )}/>
             </View>
@@ -64,6 +77,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         width: 90
-    }
+    },
+    activity: {
+        position: 'absolute',
+        top: 72,
+        alignSelf: 'center',
+        zIndex: 10
+    },
 
 });

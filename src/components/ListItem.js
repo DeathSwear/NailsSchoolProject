@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { change } from '../store/chooseThemeSlice';
+import { changeTheme } from '../store/chooseThemeSlice';
 //<Text  style={styles.text} >{el.text}</Text>
 export default function ListItem({el, jumpToScreen2 }){
     const pressHandler = (id) => {
@@ -13,18 +13,14 @@ export default function ListItem({el, jumpToScreen2 }){
 
     const ChooceThemeAndJumpToScreen2 = () => {
       const newThemesArray = el.themes;
-      dispatch(change(newThemesArray));
+      dispatch(changeTheme(newThemesArray));
       jumpToScreen2();
     };
 
     return(
      <Pressable style={styles.content} onPress={ChooceThemeAndJumpToScreen2}>
-        
-        <Image style={styles.content__img} source={el.image}/>
-        
+        <Image style={styles.content__img} source={{uri: el.image}}/>
         <Text style={styles.content__text} numberOfLines={2} >{el.text}</Text>
-        
-        
      </Pressable>
     );
 }

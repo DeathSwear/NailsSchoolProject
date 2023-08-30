@@ -2,13 +2,16 @@ import { configureStore } from '@reduxjs/toolkit';
 //import { persistStore, persistReducer } from 'redux-persist';
 //import AsyncStorage from '@react-native-async-storage/async-storage';
 //import { combineReducers } from 'redux'
-import balanceReducer from './balanceSlice';
 import chooseThemeReducer from './chooseThemeSlice';
+import listFavoritesReducer from './listFavoritesSlice';
 import loginedReducer from './loginedSlice';
+import listLikedReducer from './listLikedSlice';
 
 //без сохранения
 export const store = configureStore({
     reducer: {
+        listFavorited: listFavoritesReducer,
+        listLiked: listLikedReducer,
         theme: chooseThemeReducer,
         logined: loginedReducer,
     },

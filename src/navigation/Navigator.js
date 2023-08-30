@@ -15,7 +15,9 @@ const screen3Name = 'Sc3';
 //три экрана, для третьего раздела
 import Login from "../Screens/Screen3/Login";
 import { Screen3 } from "../Screens/Screen3/Screen3";
+import { AddItems } from "../Screens/Screen3/AddItems";
 import  Personality  from "../Screens/Screen3/Personality"
+import { PostView } from "../Screens/Screen3/PostView";
 
 import { useSelector} from 'react-redux';
 
@@ -30,6 +32,8 @@ export const Navigator = () => {
       <FavoriteStack.Navigator screenOptions={{headerShown: false}}>
         <FavoriteStack.Screen name="2" component={Screen3} />
         <FavoriteStack.Screen name="3" component={Personality} />
+        <FavoriteStack.Screen name="4" component={AddItems} />
+        <FavoriteStack.Screen name="5" component={PostView} />
       </FavoriteStack.Navigator>
     );
   }

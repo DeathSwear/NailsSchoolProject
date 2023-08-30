@@ -1,6 +1,7 @@
 import {View, Text, StyleSheet, TextInput, ActivityIndicator, Button, ImageBackground, Pressable} from 'react-native';
-import React, {cloneElement, useState} from 'react';
-import { FIREBASE_AUTH } from '../../DB/firebaseConfig';
+import React, { useState, useEffect} from 'react';
+import { FIREBASE_AUTH, FIREBASE_STORE } from '../../DB/firebaseConfig';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -54,6 +55,42 @@ const Login = ({ navigation }) => {
         }
     }
 
+    const createUserFavoritesDocument = async (userUID) => {
+        const favoritesRef = doc(FIREBASE_STORE, 'favorites', userUID);
+    
+        try {
+            await setDoc(favoritesRef, {
+                favoriteItems: [],
+                likedItems: []
+            });
+            console.log('Favorites document created for user:', userUID);
+        } catch (error) {
+            console.error('Error creating favorites document:', error);
+        }
+    };
+    
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const userUID = user.uid;
+                const favoritesRef = doc(FIREBASE_STORE, 'favorites', userUID);
+    
+                try {
+                    // Проверяем, существует ли документ в разделе "favorites" для данного пользователя
+                    const docSnapshot = await getDoc(favoritesRef);
+                    if (!docSnapshot.exists()) {
+                        // Если документ не существует, создаем его
+                        await createUserFavoritesDocument(userUID);
+                    } else console.log('уже есть');
+                } catch (error) {
+                    console.error('Error checking favorites document:', error);
+                }
+            }
+        });
+            // Отписка от наблюдения за состоянием аутентификации
+        return () => unsubscribe();
+    }, []);
+
     return(
         <View style={styles.wrapper}>
             <ImageBackground
@@ -93,7 +130,7 @@ const Login = ({ navigation }) => {
                     </View>
                     {stage==='Choose'? null : <>
                     <View style={styles.inputContent}>
-                        <TextInput style={styles.input} placeholder='Email' autoCapitalize='none' value={email} onChangeText={(text) => setEmail(text)}/>
+                        <TextInput style={styles.input} keyboardType='email-address' placeholder='Email' autoCapitalize='none' value={email} onChangeText={(text) => setEmail(text)}/>
                         <TextInput secureTextEntry={true} style={styles.input} placeholder='Password' autoCapitalize='none' value={password} onChangeText={(text) => setPassword(text)}/>
                         {loading? <ActivityIndicator size="large" color="#dddddd"/> : <>
                         {stage==='In'? <Pressable onPress={signIn} style={styles.signInOr}><Text style={styles.signInOrText}>Войти</Text></Pressable> : null }
@@ -128,6 +165,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2.2,
         borderColor: '#612353',
         backgroundColor: '#ffffff3f',
+        paddingHorizontal: 5,
     },
     contentHeader: {
         flexDirection: 'row',
